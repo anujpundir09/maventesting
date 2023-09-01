@@ -1,0 +1,55 @@
+import java.util.HashMap;
+import java.util.Map;
+import java.util.Scanner;
+
+public class TimeTracker {
+    public static void main(String[] args) {
+        Scanner scanner = new Scanner(System.in);
+        Map<String, Integer> tasks = new HashMap<>();
+
+        while (true) {
+            System.out.println("Time Tracker Menu:");
+            System.out.println("1. Start a Task");
+            System.out.println("2. Stop a Task");
+            System.out.println("3. List Tasks and Time");
+            System.out.println("4. Exit");
+            System.out.print("Enter your choice: ");
+
+            int choice = scanner.nextInt();
+            scanner.nextLine(); // Consume newline
+
+            switch (choice) {
+                case 1:
+                    System.out.print("Enter task name: ");
+                    String taskName = scanner.nextLine();
+                    tasks.put(taskName, tasks.getOrDefault(taskName, 0));
+                    System.out.println("Task '" + taskName + "' started.");
+                    break;
+                case 2:
+                    System.out.print("Enter task name to stop: ");
+                    String stopTaskName = scanner.nextLine();
+                    if (tasks.containsKey(stopTaskName)) {
+                        System.out.print("Enter time spent (in minutes): ");
+                        int timeSpent = scanner.nextInt();
+                        tasks.put(stopTaskName, tasks.get(stopTaskName) + timeSpent);
+                        System.out.println("Task '" + stopTaskName + "' stopped.");
+                    } else {
+                        System.out.println("Task not found.");
+                    }
+                    break;
+                case 3:
+                    System.out.println("Tasks and Time Spent:");
+                    for (Map.Entry<String, Integer> entry : tasks.entrySet()) {
+                        System.out.println(entry.getKey() + ": " + entry.getValue() + " minutes");
+                    }
+                    break;
+                case 4:
+                    System.out.println("Exiting Time Tracker. Goodbye!");
+                    scanner.close();
+                    System.exit(0);
+                default:
+                    System.out.println("Invalid choice. Please try again.");
+            }
+        }
+    }
+}
